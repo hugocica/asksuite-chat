@@ -1,0 +1,45 @@
+.list-group-sm .list-group-item {
+  padding: 6px 10px;
+}
+
+.list-group-item:last-child {
+  margin-bottom: 0;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.list-group-item {
+  padding-right: 15px;
+  border-color: #e7ecee;
+}
+
+.input-lg {
+  color: #58666e;
+  height: 46px;
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.3333333;
+  border-radius: 6px;
+}
+
+.no-border, .no-borders {
+  border-color: transparent;
+  border-width: 0;
+}
+
+.list-group {
+  border-radius: 2px;
+}
+
+.list-group {
+  padding-left: 0;
+  margin-bottom: 20px;
+}
+
+.login-navbar{
+  background-color: #E04815 !important;
+  background-image: linear-gradient(to right, #E04815,  #E04815);
+  background-repeat: repeat-x;
+  min-height: 50px !important;
+
+}

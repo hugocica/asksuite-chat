@@ -1,0 +1,1 @@
+npm run build & git add . & git commit -m "up to dokku" & git push dokku_virginia master

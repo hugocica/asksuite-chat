@@ -1,0 +1,27 @@
+/* You can add global styles to this file, and also import other style files */
+
+//== Vendor
+@import '~font-awesome/css/font-awesome.css';
+@import '~simple-line-icons/css/simple-line-icons.css';
+@import '~angular2-toaster/toaster.css';
+
+//== Bootstrap
+@import "./app/shared/styles/bootstrap.scss";
+//== Application
+@import "./app/shared/styles/app.scss";
+
+.card-title{
+  color: #0F454D !important;
+  font-weight: bolder;
+}
+
+.flotTip {
+  font-size: 14px !important;
+  background: #fff !important;
+  z-index: 1040;
+  padding: 0.4em 0.6em;
+  border-radius: 0.5em;
+  border: 1px solid #111;
+  display: none;
+  white-space: nowrap
+}

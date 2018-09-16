@@ -1,0 +1,92 @@
+<!-- START Top Navbar-->
+
+<ngx-spinner></ngx-spinner>
+
+<nav class="navbar topnavbar login-navbar" role="navigation">
+    <!-- START navbar header-->
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#/">
+
+            <img  class="logo1-size" src="assets/img/logo-single.png">
+            <img style="height: 22px;" class="hidden-folded logo2-size" src="assets/img/teste.png">
+
+            <!--<div class="brand-logo" style="width: 124px;">-->
+                <!--<img class="img-fluid" src="assets/img/logo.png" alt="App Logo"/>-->
+
+            <!--</div>-->
+        </a>
+    </div>
+    <!-- END navbar header-->
+
+</nav>
+<!-- END Top Navbar-->
+
+
+<div class="wrapper">
+
+    <toaster-container [toasterconfig]="toasterconfig"></toaster-container>
+
+    <div class="block-center mt-5 wd-xl">
+        <!-- START card-->
+        <!--<div class="card card-flat">-->
+
+        <div class="wrapper text-center text-2x mb-5">
+            <strong><span style="font-size: 2em;">Iniciar sessão</span></strong>
+        </div>
+
+
+        <form [formGroup]="valForm" class="form-validate mb-3" role="form" name="loginForm" novalidate=""
+              (submit)="submitForm($event, valForm.value)">
+
+            <div class="list-group list-group-sm">
+
+                <div class="list-group-item">
+                        <input class="form-control no-border input-lg" id="exampleInputEmail1" type="email"
+                               name="email" placeholder="Email" autocomplete="off" formControlName="email"
+                               required=""/>
+                    <div class="text-danger"
+                         *ngIf="valForm.controls['email'].hasError('required') && (valForm.controls['email'].dirty || valForm.controls['email'].touched)">
+                        Esse campo é obrigatório
+                    </div>
+                    <div class="text-danger"
+                         *ngIf="valForm.controls['email'].hasError('email') && (valForm.controls['email'].dirty || valForm.controls['email'].touched)">
+                        O email deve ser válido
+                    </div>
+                </div>
+                <div class="list-group-item">
+                        <input class="form-control no-border input-lg" id="exampleInputPassword1" type="password"
+                               name="password" placeholder="Senha" formControlName="password" required=""/>
+                    <div class="text-danger"
+                         *ngIf="valForm.controls['password'].hasError('required') && (valForm.controls['password'].dirty || valForm.controls['password'].touched)">
+                        Esse campo é obrigatório
+                    </div>
+                </div>
+
+            </div>
+            <div class="clearfix">
+                <div class="checkbox c-checkbox float-left mt0">
+                    <!--<label>-->
+                    <!--<input type="checkbox" value="" name="account_remember" />-->
+                    <!--<span class="fa fa-check"></span>Remember Me</label>-->
+                </div>
+                <!--<div class="float-right">-->
+                <!--<a class="text-muted" [routerLink]="'/recover'">Forgot your password?</a>-->
+                <!--</div>-->
+            </div>
+            <button class="btn btn-lg btn-info btn-block" style="font-size: 18px; font-weight: 500" type="submit">Iniciar sessão</button>
+        </form>
+        <!-- <div class="alert alert-danger text-center" ></div> -->
+        <!--<p class="pt-3 text-center">Need to Signup?</p>-->
+        <!--<a class="btn btn-block btn-secondary" [routerLink]="'/register'">Register Now</a>-->
+        <!--</div>-->
+        <!-- END card-->
+        <div class="p-3 text-center">
+            <span>&copy;</span>
+            <span>{{ settings.app.year }}</span>
+            <span class="mx-2">-</span>
+            <span>{{ settings.app.name }}</span>
+            <br/>
+            <span>{{ settings.app.description }}</span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,138 @@
+<div class="content-heading">
+    <div>
+        Home
+    </div>
+</div>
+<!-- START cards box-->
+
+<div class="row mb-2">
+
+
+    <div class="col-xl-3 col-md-6" *ngIf="showSearchCompany">
+        <ngx-select [allowClear]="true"
+                    (remove)="removed()"
+                    [items]="items"
+                    (select)="selected($event)"
+                    optionValueField="companyId"
+                    optionTextField="name"
+                    placeholder="Todas as empresas">
+        </ngx-select>
+
+    </div>
+</div>
+
+<div class="row" *ngIf="show">
+
+
+    <div class="col-xl-3 col-md-6">
+        <!-- START card-->
+        <div class="card flex-row align-items-center align-items-stretch border-0">
+            <div class="col-4 d-flex align-items-center bg-primary-dark justify-content-center rounded-left">
+                <em class="fa fa-envelope fa-3x"></em>
+            </div>
+            <div class="col-8 py-3 bg-primary rounded-right">
+                <div class="h2 mt-0">{{(dashInfo.totalMessages ? dashInfo.totalMessages : 0) | number}}</div>
+                <div class="text-uppercase title-home">mensagens trocadas</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6">
+        <!-- START card-->
+        <div class="card flex-row align-items-center align-items-stretch border-0">
+            <div class="col-4 d-flex align-items-center bg-purple-dark justify-content-center rounded-left">
+                <em class=" fa icon-bubbles fa-3x"></em>
+            </div>
+            <div class="col-8 py-3 bg-purple rounded-right">
+                <div class="h2 mt-0">{{dashInfo.totalConversations | number}}
+                </div>
+                <div class="text-uppercase title-home">Atendimentos</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-lg-6 col-md-12">
+        <!-- START card-->
+        <div class="card flex-row align-items-center align-items-stretch border-0">
+            <div class="col-4 d-flex align-items-center bg-green-dark justify-content-center rounded-left">
+                <em class="fa fa-clock-o fa-3x"></em>
+            </div>
+            <div class="col-8 py-3 bg-green rounded-right">
+                <div class="h2 mt-0">{{(dashInfo.totalOutOfCommercialDate ? dashInfo.totalOutOfCommercialDate : 0) | number}}</div>
+                <div class="text-uppercase title-home">Fora do horário</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-lg-6 col-md-12">
+        <!-- START date widget-->
+        <div class="card flex-row align-items-center align-items-stretch border-0">
+            <div class="col-4 d-flex align-items-center bg-warning-dark justify-content-center rounded-left">
+                <em class="fa fa-calendar-check-o fa-3x"></em>
+            </div>
+            <div class="col-8 py-3 bg-warning rounded-right">
+                <div class="h2 mt-0">{{dashInfo.totalProposal | number}}</div>
+                <div class="text-uppercase title-home">Cotações</div>
+            </div>
+        </div>
+        <!-- END date widget-->
+    </div>
+
+
+</div>
+
+<!-- END cards box-->
+<div class="row" *ngIf="show">
+
+    <div class="col-xl-3" *ngIf="company">
+        <!-- START loader widget-->
+        <div class="card card-default" style="min-height: 430px;">
+            <div class="card-header">
+                <div class="card-title">Status das respostas pendentes</div>
+            </div>
+            <div class="card-body">
+
+                <p class="text-warning" *ngIf="trackingIntentsCompany.amountDone < trackingIntentsCompany.amountTotal"><i class="fa fa-warning"></i> Você possui {{trackingIntentsCompany.amountTotal - trackingIntentsCompany.amountDone}} respostas pendentes para responder.</p>
+                <p class="text-success" *ngIf="trackingIntentsCompany.amountDone == trackingIntentsCompany.amountTotal">Você já preencheu todas as questões pendentes :)</p>
+
+                <div class="text-center" >
+                    <div *ngIf="trackingIntentsCompany.amountDone" class="h1 mt-5 text-dark" style="font-size: 5.25rem">{{trackingIntentsCompany.amountDone}}/{{trackingIntentsCompany.amountTotal}}</div>
+
+                    <div style="margin-top: 3.5rem !important">
+                        <a class="btn btn-warning btn-lg btn-block" style="text-transform: uppercase; font-size: 14px;" target="_blank" href="http://ativacao.asksuite.com/#/user-edit/{{company}}">Edite as respostas do robô</a>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <!--<div class="card-footer">-->
+                <!--<p class="text-muted">-->
+                    <!--<em class="fa fa-upload fa-fw"></em>-->
+                    <!--<a target="_blank" href="http://ativacao.asksuite.com/#/user-edit/{{company}}">Ver meu Painel de Ativação</a>-->
+                <!--</p>-->
+            <!--</div>-->
+        </div>
+    </div>
+
+    <!-- START dashboard main content-->
+    <div class="col-xl-9">
+        <!-- START chart-->
+        <div class="row">
+            <div class="col-xl-12">
+
+                <!-- START card-->
+                <div class="card card-default">
+                    <div class="card-header">
+                        <div class="card-title">Indicadores por mês</div>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div flot [dataset]="splineData" [options]="splineOptions" height="350"></div>
+                    </div>
+                </div>
+                <!-- END card-->
+            </div>
+        </div>
+
+    </div>
+</div>

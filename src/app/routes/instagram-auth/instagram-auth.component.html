@@ -1,0 +1,90 @@
+<div class="content-heading">
+    <div>
+        Integração com Instagram
+    </div>
+</div>
+
+
+<div class="row">
+
+
+    <div class="col-md-12 mb-2">
+
+        <div class="col-xl-3 col-md-6" *ngIf="showSearchCompany" style="padding-left: 0px; !important;">
+            <ngx-select [allowClear]="true"
+                        (remove)="removed()"
+                        [items]="items"
+                        (select)="selected($event)"
+                        optionValueField="companyId"
+                        optionTextField="name"
+                        placeholder="Selecione uma empresa">
+            </ngx-select>
+
+        </div>
+    </div>
+
+    <div class="col-md-8" *ngIf="companyId">
+        <!-- START card-->
+
+        <div class="card card-default">
+
+
+            <div class="card-body">
+
+
+                <div *ngIf="instagramAccount">
+
+                    <h3>O Instagram já está ativo com o usuário: {{instagramAccount.username}}</h3>
+                    <button class="btn btn-danger" (click)="delete()">Excluir ativação</button>
+                </div>
+
+
+                <div *ngIf="!instagramAccount">
+
+                    <h3>Integrar robô com Instagram</h3>
+
+                    <p>O Instagram roda diretamente no nosso servidor. Você precisa apenas autorizar nosso acesso, o
+                        passo-a-passo: </p>
+                    <ul>
+                        <li>Insira seu login e senha - Clique em Enviar</li>
+                        <li>Entre no seu Instagram pelo celular e verifique confirmar o acesso e clique em "Fui Eu".
+                        </li>
+                        <li>Clique em "Enviar" novamente</li>
+
+                    </ul>
+
+
+                    <form role="form" [formGroup]="valForm" (submit)="submitForm($event, valForm.value)" novalidate="">
+                        <div class="form-group">
+                            <label>Usuário</label>
+                            <input class="form-control" type="text" placeholder="Usuário do Instagram"
+                                   formControlName="username" [formControl]="valForm.get('username')" required/>
+                            <span class="text-danger"
+                                  *ngIf="valForm.get('username').hasError('required') && (valForm.get('username').dirty || valForm.get('username').touched)">Campo obrigatório</span>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label>Senha</label>
+                            <input class="form-control" type="password" placeholder="Senha do Instagram"
+                                   formControlName="password" [formControl]="valForm.get('password')"/>
+                            <span class="text-danger"
+                                  *ngIf="valForm.get('password').hasError('required') && (valForm.get('password').dirty || valForm.get('password').touched)">Campo obrigatório</span>
+
+                        </div>
+
+
+                        <div>
+                            <button class="btn btn-lg btn-primary" type="submit">Enviar</button>
+                        </div>
+
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+        <!-- END card-->
+    </div>
+
+</div>

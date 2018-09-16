@@ -1,0 +1,221 @@
+<div class="container-fluid">
+  <div class="content-heading">Atendimentos</div>
+
+  <div class="h-100">
+    <!-- LISTA DE EMPRESAS DO USUÁRIO -->
+    <div class="row mb-2 company-select">
+      <div class="col-xl-4 col-md-5 col-sm-4" *ngIf="showSearchCompany">
+        <ngx-select
+          [allowClear]="true"
+          (remove)="removed()"
+          [items]="items"
+          (select)="selected($event)"
+          optionValueField="companyId"
+          optionTextField="name"
+          placeholder="Todas as empresas">
+        </ngx-select>
+      </div>
+    </div>
+
+    <div class="chat-box row pr-3">
+      <!-- LISTA DE CONVERSAS DA EMPRESA/HOTEL-->
+      <div class="col-xl-3 col-md-4 col-sm-3 h-100">
+        <div class="panel b h-100">
+          <div class="list-group conversation-list h-100"
+            infinite-scroll [infiniteScrollDistance]="2"
+            [scrollWindow]="false"
+            (scrolled)="onConversationScrollDown()">
+            <ng-container *ngFor="let con of conversations" >
+              <a class="list-group-item"
+                (click)="openChat(con)"
+                [ngClass]="{'active': (selectedConversation && selectedConversation.id === con.id)}">
+
+                <div class="row">
+                  <div class="col-md-auto align-middle">
+                    <div
+                      [ngStyle]="{'background-color': con.backgroundColor}"
+                      class="source-circle align-middle font-weight-bold">{{con.source}}
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="row mt-2">
+                      <span class="col user-name">{{con.name}}</span>
+                      <span class="col-md-auto mt-3 text-right font-weight-light">{{con.timeAgo | timeAgo}}</span>
+                    </div>
+                    <span class="messages-counter">{{con.messages}}</span>
+                  </div>
+                  <span *ngIf="con.quoted" class="quoted-badge badge badge-danger">COTAÇÃO</span>
+                </div>
+              </a>
+            </ng-container>
+
+            <ng-template *ngIf="conversationsLoading">
+              <div class="ball-scale-multiple">
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </ng-template>
+
+
+            <a class="list-group-item" *ngIf="conversations.length === 0">
+              <div class="row">
+                <div class="col">
+                  <div class="row mt-2 text-center">
+                    <span class="col user-name">Não há mensagens para exibir</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAINEL DA DIREITA -->
+      <div class="right-box container-fluid col-xl-9 col-md-8 col-sm-9 h-100">
+        <div class="panel b panel-default h-100">
+          <div class="h-100">
+            <!-- BARRA SUPERIORA -->
+            <div class="top-details panel-heading bb">
+              <div class="row">
+                <div class="conversation-details col-8 col-md-10">
+                  <div *ngIf="selectedConversation">
+                    <span>
+                      <em class="fa fa-user"></em>{{selectedConversation.name}}
+                    </span>
+                    <span>
+                      <em class="fa fa-calendar"></em>{{selectedConversation.timeAgo | timeAgo}}
+                    </span>
+                    <span>
+                      <em class="fa fa-comments"></em>{{selectedConversation.messages}}
+                    </span>
+                    <span *ngIf="selectedConversation.quoted" class="quoted">
+                      <em class="fa fa-money"></em>Cotação
+                    </span>
+                  </div>
+                </div>
+                <div class="col-4 col-md-2">
+                  <button type="button" class="btn-details btn btn-oval btn-secondary float-right" (click)="toggleDetails()">Detalhes</button>
+                </div>
+              </div>
+            </div>
+            <!-- TELA DE CHAT -->
+            <div id="chat-panel" class="panel-body collapse show no-gutters d-flex h-100 position-relative">
+              <div class="chat-pannel-inner col">
+                <ng-container *ngIf="chat.length > 0; else chatSpinner">
+                  <ng-container *ngFor="let msg of chat">
+
+                    <!-- MENSAGEM DO USUÁRIO -->
+                    <div class="messages-box">
+                      <div class="incoming_msg" *ngIf="msg.type === 'receive';else sentMsg">
+                        <div class="received_msg">
+                          <div class="received_withd_msg">
+                            <span class="time_date"><b>{{selectedConversation.name}},</b> {{msg.createdAt | timeAgo}}</span>
+                            <!-- <span class="time_date"> 11:01 AM    |    June 9</span> -->
+                            <p>{{msg.text}}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- MENSAGEM DO BOT -->
+                      <ng-template #sentMsg>
+                        <div class="outgoing_msg" *ngIf="msg.text">
+                          <div class="sent_msg">
+                            <span class="time_date"><b>Bot,</b> {{msg.createdAt | timeAgo}}</span>
+                            <p>{{msg.text}}</p>
+                          </div>
+                        </div>
+
+                        <!-- BOTÕES DE INTERAÇÃO -->
+                        <div class="reply-button-box" *ngIf="msg.buttons.length > 0">
+                          <ng-container *ngFor="let reply of msg.buttons">
+                            <div class="outgoing_button">
+                              <div class="sent_msg reply-button">
+                                <p>{{reply.label}}</p>
+                              </div>
+                            </div>
+                          </ng-container>
+                        </div>
+
+                        <!-- FOTOS -->
+                        <div class="carousel-box" *ngIf="msg.pictures.length > 0">
+                          <div class="carousel-control-left">
+                            <span>❮</span>
+                          </div>
+                          <div class="carousel-control-right">
+                            <span>❯</span>
+                          </div>
+
+                          <div class="picture-message">
+                            <ng-container *ngFor="let picture of msg.pictures">
+                              <div class="panel picture-panel">
+                                <div class="image">
+                                  <img class="img-thumbnail img-responsive rounded mx-auto d-block"
+                                    [ngClass]="{'no-img': (!picture.url)}"
+                                    [src]="picture.url || 'assets/img/empty.jpg'" />
+                                </div>
+
+                                <div class="panel-body">
+                                  <h4 class="title">{{picture.title}}</h4>
+
+                                  <p class="text">{{picture.subTitle}}</p>
+
+                                  <ng-container *ngFor="let button of picture.buttons">
+                                    <span class="pull-right picture-button">
+                                        <strong>{{button.label}}</strong>
+                                    </span>
+                                  </ng-container>
+
+                                </div>
+                              </div>
+                            </ng-container>
+                          </div>
+                        </div>
+
+                      </ng-template>
+                    </div>
+
+                  </ng-container>
+                </ng-container>
+
+                <ng-template *ngIf="chatLoading">
+                  <div class="ball-scale-multiple">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </ng-template>
+
+              </div>
+              <!-- BARRA DE DETALHES -->
+              <div class="col-4 p-0 text-white" [ngClass]="{'hidden-sidebar': (!showDetails)}">
+                  <div class="datails-side-drawer navbar-dark position-fixed ">
+                      <h5 class="px-3 pt-2">Detalhes</h5>
+                      <ul class="nav flex-column flex-nowrap text-truncate">
+                          <li class="nav-item">
+                              Exemplo 1
+                          </li>
+                          <li class="nav-item">
+                              Exemplo 2
+                          </li>
+                          <li class="nav-item">
+                              Exemplo 3
+                          </li>
+                      </ul>
+                  </div>
+              </div>
+            </div>
+
+            <!-- MESSAGE BAR -->
+            <div class="type_msg bt bb">
+              <div class="input_msg_write">
+                <input type="text" class="write_msg" placeholder="Digite sua mensagem" />
+                <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

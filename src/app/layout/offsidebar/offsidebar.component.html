@@ -1,0 +1,29 @@
+<tabset [justified]="true">
+    <tab>
+        <div class="list-group">
+            <!-- START list title-->
+            <div class="list-group-item border-0">
+                <small class="text-muted">Opções</small>
+            </div>
+            <!-- END list title-->
+
+
+            <div class="list-group-item list-group-item-action">
+
+                <button class="btn btn-link" (click)="instagramAuth()">Integração Instagram</button>
+
+            </div>
+
+            <div class="list-group-item list-group-item-action">
+
+                <button class="btn btn-link" (click)="changePassword()">Troca de senha</button>
+
+            </div>
+
+            <div class="list-group-item list-group-item-action">
+
+                <button class="btn btn-link" (click)="logout()">Sair</button>
+            </div>
+        </div>
+    </tab>
+</tabset>

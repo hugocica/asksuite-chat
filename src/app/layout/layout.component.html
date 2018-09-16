@@ -1,0 +1,24 @@
+
+
+<div class="wrapper">
+
+    <ngx-spinner></ngx-spinner>
+
+    <!-- top navbar-->
+    <app-header class="topnavbar-wrapper"></app-header>
+    <toaster-container [toasterconfig]="toasterconfig"></toaster-container>
+
+
+    <!-- sidebar-->
+    <app-sidebar class="aside-container" ></app-sidebar>
+    <!-- offsidebar-->
+    <app-offsidebar class="offsidebar"></app-offsidebar>
+    <!-- Main section-->
+    <section class="section-container">
+        <!-- Page content-->
+        <div class="content-wrapper">
+
+            <router-outlet></router-outlet>
+        </div>
+    </section>
+</div>

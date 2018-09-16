@@ -1,0 +1,34 @@
+<div class="content-heading">
+  <div>Atendimentos
+    <small>Atendimentos realizados através do Chatbot</small></div>
+</div>
+<!-- <alert [type]="'info'">None of this examples are based on the official jQuery-Datatables</alert> -->
+<div class="row mb-2">
+
+
+  <div class="col-xl-3 col-md-6" *ngIf="showSearchCompany">
+    <ngx-select [allowClear]="true"
+                (remove)="removed()"
+                [items]="items"
+                (select)="selected($event)"
+                optionValueField="companyId"
+                optionTextField="name"
+                placeholder="Todas as empresas">
+    </ngx-select>
+  </div>
+</div>
+
+<!--<div class="mb-3 clearfix">-->
+  <!--<div class="pull-let wd-md">-->
+    <!--<input *ngIf="config.filtering" placeholder="Filter all columns" [ngTableFiltering]="config.filtering" class="form-control" (tableChanged)="onChangeTable(config)" />-->
+  <!--</div>-->
+<!--</div>-->
+<div class="card card-default">
+  <div class="table-responsive">
+    <ng-table [config]="config" (tableChanged)="onChangeTable(config, 0)" [rows]="rows" [columns]="columns"></ng-table>
+  </div>
+</div>
+<div class="text-right">
+  <pagination *ngIf="config.paging" class="pagination" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [directionLinks]="false" [boundaryLinks]="false" [rotate]="false" (pageChanged)="refreshData()" (numPages)="numPages = $event">
+  </pagination>
+</div>

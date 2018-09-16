@@ -1,0 +1,134 @@
+<div class="content-heading">
+  <div>
+    Estatísticas
+  </div>
+</div>
+
+
+<div class="row mb-2">
+
+
+  <div class="col-xl-3 col-md-6" *ngIf="showSearchCompany">
+    <ngx-select [allowClear]="true"
+                (remove)="removed()"
+                [items]="items"
+                (select)="selected($event)"
+                optionValueField="companyId"
+                optionTextField="name"
+                placeholder="Todas as empresas">
+    </ngx-select>
+
+  </div>
+</div>
+
+
+
+<div class="row"  *ngIf="show">
+
+  <!-- START dashboard main content-->
+  <div class="col-xl-6">
+    <!-- START chart-->
+    <div class="row">
+      <div class="col-xl-12">
+
+        <!-- START card-->
+        <div class="card card-default">
+          <div class="card-header">
+            <div class="card-title">Total por horário</div>
+          </div>
+
+          <div class="card-body">
+            <div id="chartLegend"></div>
+            <div flot [dataset]="totalHour" [options]="barOptionsTotalHour" height="300"></div>
+
+            <!--<div flot [dataset]="splineData" [options]="splineOptions" height="350"></div>-->
+          </div>
+        </div>
+        <!-- END card-->
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- START dashboard main content-->
+  <div class="col-xl-6">
+    <!-- START chart-->
+    <div class="row">
+      <div class="col-xl-12">
+
+        <!-- START card-->
+        <div class="card card-default">
+          <div class="card-header">
+            <div class="card-title">Percentual por horário</div>
+          </div>
+
+          <div class="card-body">
+            <div class="chartlegend" id="chartLegenddPieHour"></div>
+            <div flot [dataset]="pieData" [options]="pieOptions" height="300"></div>
+            <!--<div flot [dataset]="splineData" [options]="splineOptions" height="350"></div>-->
+          </div>
+        </div>
+        <!-- END card-->
+      </div>
+    </div>
+
+  </div>
+
+
+
+  <!-- START dashboard main content-->
+  <div class="col-xl-6">
+    <!-- START chart-->
+    <div class="row">
+      <div class="col-xl-12">
+
+        <!-- START card-->
+        <div class="card card-default">
+          <div class="card-header">
+            <div class="card-title">Total por dia da semana</div>
+          </div>
+
+          <div class="card-body">
+            <div class="chartlegend" id="chartLegendDayOfWeek"></div>
+
+            <div flot [dataset]="totalWeek" [options]="barOptions" height="300"></div>
+
+            <!--<div flot [dataset]="splineData" [options]="splineOptions" height="350"></div>-->
+          </div>
+        </div>
+        <!-- END card-->
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+  <!-- START dashboard main content-->
+  <div class="col-xl-6">
+    <!-- START chart-->
+    <div class="row">
+      <div class="col-xl-12">
+
+        <!-- START card-->
+        <div class="card card-default">
+          <div class="card-header">
+            <div class="card-title">Atendimentos por canal</div>
+          </div>
+
+          <div class="card-body">
+            <div class="chartlegend" id="chartLegenddPie"></div>
+            <div flot [dataset]="pieDataPlatforms" [options]="pieOptions" height="300"></div>
+            <!--<div flot [dataset]="splineData" [options]="splineOptions" height="350"></div>-->
+          </div>
+        </div>
+        <!-- END card-->
+      </div>
+    </div>
+
+  </div>
+
+
+</div>
